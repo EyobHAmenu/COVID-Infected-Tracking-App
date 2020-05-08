@@ -1,18 +1,16 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Visit {
-
+public class VisitedPlace {
     private String visitPlace;
     private String visitAddress;
     private String visitCity;
     private String visitState;
     private String visitDate;
 
-
-    public Visit() {
+    public VisitedPlace() {
     }
 
-    public Visit(String visitAddress, String visitCity, String visitState, String visitDate) {
+    public VisitedPlace(String visitAddress, String visitCity, String visitState, String visitDate) {
         this.visitAddress = visitAddress;
         this.visitCity = visitCity;
         this.visitState = visitState;
@@ -57,6 +55,11 @@ public class Visit {
 
     public void setVisitDate(String visitDate) {
         this.visitDate = visitDate;
+    }
+
+    public void displayVisists(){
+        System.out.println("Name: " + getVisitPlace() + ", Address: " + getVisitAddress() + ", City: "
+                + getVisitCity() + ", State: " + getVisitState() + ", Visited Date: " + getVisitDate());
     }
 
 }

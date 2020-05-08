@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ContactedPerson extends Patient {
+public class ContactedPerson extends Patient{
     private String locationOfContact;
     private String dateOfContact;
 
@@ -27,6 +28,11 @@ public class ContactedPerson extends Patient {
     public void setDateOfContact(String dateOfContact) {
         this.dateOfContact = dateOfContact;
     }
+    public void displayContactedPersons(){
 
-
+        System.out.println("Name :"  + getName() + "\n" + "Phone: " + getPhoneNumber() + "\n" + "Email: " +
+                getEmail() + "\n" + "ADDRESS: " + getAddress() + "\t" + "CITY: " + getCity() + "\t" + "STATE: "
+                + getState() + "\n" + "CONTACTED LOCATION: " + getLocationOfContact() + "\n" + "DATE OF CONTACT: "
+                + getDateOfContact() + "\n");
+    }
 }

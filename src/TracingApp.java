@@ -58,17 +58,20 @@ public class TracingApp {
 
          */
 
+        String patientFlag = "y";
         String haveSymptom;
         String haveMeet;
         String haveVisit;
         ArrayList<ContactedPerson> listOfContacts = new ArrayList<>();
-        ArrayList<Visit> listOfVisits = new ArrayList<>();
+        ArrayList<VisitedPlace> listOfVisitedPlaces = new ArrayList<>();
+        ArrayList<Sysmptom> listOfSymptoms = new ArrayList<>();
 
         Scanner in = new Scanner(System.in);
-        Patient newPatient = new Patient();
-        Sysmptom newSymptom = new Sysmptom();
-
-
+        Searcher newSearch = new Searcher();
+        Patient newPatient;
+        Sysmptom newSymptom;
+        VisitedPlace newVisitedPlace;
+        ContactedPerson newContacted;
 
         ArrayList<String> majorSysmptoms = new ArrayList<>();
         majorSysmptoms.add("Fever");
@@ -86,103 +89,99 @@ public class TracingApp {
 
 
         System.out.println("------ Contact Tracing Program -------");
-        System.out.println("Enter Newly Infected Person. ");
-        System.out.print("What is a patient's name ? ");
-        newPatient.setName(in.nextLine());
-        System.out.print("What is a patient's phone number?(xxx-xxx-xxxx): ");
-        newPatient.setPhoneNumber(in.nextLine());
-        System.out.print("What is a patient's email ? ");
-        newPatient.setEmail(in.nextLine());
-        System.out.print("What is a patient's address ? ");
-        newPatient.setAddress(in.nextLine());
-        System.out.print("What is a patient's city ? ");
-        newPatient.setCity(in.nextLine());
-        System.out.print("What is a patient's state ? ");
-        newPatient.setState(in.nextLine());
-        System.out.println();
+        while (patientFlag.equalsIgnoreCase("Y")) {
+            newPatient = new Patient();
+            System.out.println("Enter Newly Infected Person. ");
+            System.out.print("What is a patient's name ? ");
+            newPatient.setName(in.nextLine());
+            System.out.print("What is a patient's phone number?(xxx-xxx-xxxx): ");
+            newPatient.setPhoneNumber(in.nextLine());
+            System.out.print("What is a patient's email ? ");
+            newPatient.setEmail(in.nextLine());
+            System.out.print("What is a patient's address ? ");
+            newPatient.setAddress(in.nextLine());
+            System.out.print("What is a patient's city ? ");
+            newPatient.setCity(in.nextLine());
+            System.out.print("What is a patient's state ? ");
+            newPatient.setState(in.nextLine());
+            System.out.println();
 
-        for(String symptom : majorSysmptoms){
-            System.out.print("Does " + newPatient.getName() + " have any symptom for " + symptom + " ? (y/n) ");
-            haveSymptom = in.nextLine();
-            if (haveSymptom.equalsIgnoreCase("Y")){
-                newSymptom.setSymptom(symptom);
-                System.out.print("How long has  " + newPatient.getName() + "  had this symptom for ? ");
-                newSymptom.setNumbersOfDays(in.nextInt());
-                in.nextLine();
-                newSymptom.setSymptomList(newSymptom.getSymptom(),newSymptom.getNumbersOfDays());
+            for (String symptom : majorSysmptoms) {
+                newSymptom = new Sysmptom();
+                System.out.print("Does " + newPatient.getName() + " have any symptom for " + symptom + " ? (y/n) ");
+                haveSymptom = in.nextLine();
+                if (haveSymptom.equalsIgnoreCase("Y")) {
+                    newSymptom.setSymptom(symptom);
+                    System.out.print("How long has  " + newPatient.getName() + "  had this symptom for ? ");
+                    newSymptom.setNumbersOfDays(in.nextInt());
+                    in.nextLine();
+                    listOfSymptoms.add(newSymptom);
+                }
+
             }
-        }
-        newPatient.setSymptom(newSymptom);
-        System.out.println();
+            newPatient.setSymptoms(listOfSymptoms);
+            System.out.println();
 
-        System.out.print("Have " + newPatient.getName() + " met or run into anyone else ? (y/n) ");
-        haveMeet = in.nextLine();
-        while(haveMeet.equalsIgnoreCase("Y")){
-            ContactedPerson newContacted = new ContactedPerson();;
-            System.out.print("What is his/her name? ");
-            newContacted.setName(in.nextLine());
-            System.out.print("What is " + newContacted.getName() + "'s phone number?(xxx-xxx-xxxx) ");
-            newContacted.setPhoneNumber(in.nextLine());
-            System.out.print("What is " + newContacted.getName() + "'s email ? ");
-            newContacted.setEmail(in.nextLine());
-            System.out.print("What is " + newContacted.getName() + "'s address ? ");
-            newContacted.setAddress(in.nextLine());
-            System.out.print("What city does " + newContacted.getName() + " lives in ? ");
-            newContacted.setCity(in.nextLine());
-            System.out.print("What state does " + newContacted.getName() + " live in ? ");
-            newContacted.setState(in.nextLine());
-            System.out.print("Where is the contact location/address of " + newPatient.getName() + " and "
-                    + newContacted.getName() + " ? ");
-            newContacted.setLocationOfContact(in.nextLine());
-            System.out.print("When did " + newPatient.getName() + " see " + newContacted.getName() + " ? (mm/dd/yyyy) ");
-            newContacted.setDateOfContact(in.nextLine());
-
-            listOfContacts.add(newContacted);
             System.out.print("Have " + newPatient.getName() + " met or run into anyone else ? (y/n) ");
             haveMeet = in.nextLine();
-        }
-        System.out.println();
+            while (haveMeet.equalsIgnoreCase("Y")) {
+                newContacted = new ContactedPerson();
+                System.out.print("What is his/her name? ");
+                newContacted.setName(in.nextLine());
+                System.out.print("What is " + newContacted.getName() + "'s phone number?(xxx-xxx-xxxx) ");
+                newContacted.setPhoneNumber(in.nextLine());
+                System.out.print("What is " + newContacted.getName() + "'s email ? ");
+                newContacted.setEmail(in.nextLine());
+                System.out.print("What is " + newContacted.getName() + "'s address ? ");
+                newContacted.setAddress(in.nextLine());
+                System.out.print("What city does " + newContacted.getName() + " lives in ? ");
+                newContacted.setCity(in.nextLine());
+                System.out.print("What state does " + newContacted.getName() + " live in ? ");
+                newContacted.setState(in.nextLine());
+                System.out.print("Where is the contact location/address of " + newPatient.getName() + " and "
+                        + newContacted.getName() + " ? ");
+                newContacted.setLocationOfContact(in.nextLine());
+                System.out.print("When did " + newPatient.getName() + " see " + newContacted.getName() + " ? (mm/dd/yyyy) ");
+                newContacted.setDateOfContact(in.nextLine());
 
-        System.out.print("Did " + newPatient.getName() + " visited anywhere in pass 14 days ? (y/n) ");
-        haveVisit = in.nextLine();
-        while (haveVisit.equalsIgnoreCase("Y")){
-            Visit newVisit = new Visit();;
-            System.out.print("What is the name of a visited place ? ");
-            newVisit.setVisitPlace(in.nextLine());
-            System.out.print("What is the located/address of " + newVisit.getVisitPlace() + " ? " );
-            newVisit.setVisitAddress(in.nextLine());
-            System.out.print("Which city is " + newVisit.getVisitPlace() + " located in ? ");
-            newVisit.setVisitCity(in.nextLine());
-            System.out.print("Which state is " + newVisit.getVisitPlace() + " located in ? ");
-            newVisit.setVisitState(in.nextLine());
-            System.out.print("When did " + newPatient.getName() +  " visited to " + newVisit.getVisitPlace() + " ? (mm/dd/yyyy) ");
-            newVisit.setVisitDate(in.nextLine());
+                listOfContacts.add(newContacted);
+                System.out.print("Have " + newPatient.getName() + " met or run into anyone else ? (y/n) ");
+                haveMeet = in.nextLine();
+            }
+            newPatient.setListOfContacts(listOfContacts);
+            System.out.println();
 
-            listOfVisits.add(newVisit);
             System.out.print("Did " + newPatient.getName() + " visited anywhere in pass 14 days ? (y/n) ");
             haveVisit = in.nextLine();
 
-        }
-        System.out.println();
+            while (haveVisit.equalsIgnoreCase("Y")) {
+                newVisitedPlace = new VisitedPlace();
+                System.out.print("What is the name of a visited place ? ");
+                newVisitedPlace.setVisitPlace(in.nextLine());
+                System.out.print("What is the located/address of " + newVisitedPlace.getVisitPlace() + " ? ");
+                newVisitedPlace.setVisitAddress(in.nextLine());
+                System.out.print("Which city is " + newVisitedPlace.getVisitPlace() + " located in ? ");
+                newVisitedPlace.setVisitCity(in.nextLine());
+                System.out.print("Which state is " + newVisitedPlace.getVisitPlace() + " located in ? ");
+                newVisitedPlace.setVisitState(in.nextLine());
+                System.out.print("When did " + newPatient.getName() + " visited to " + newVisitedPlace.getVisitPlace() + " ? (mm/dd/yyyy) ");
+                newVisitedPlace.setVisitDate(in.nextLine());
 
-        System.out.println("************ Infected patients Tracing Report. ************");
-        System.out.println(newPatient.displayPatient());
-        System.out.println("-------- Peoples in contact with " + newPatient.getName());
-        for(ContactedPerson x : listOfContacts) {
-            System.out.println("Name :"  + x.getName() + "\n" + "Phone: " + x.getPhoneNumber() + "\n" + "Email: " +
-                    x.getEmail() + "\n" + "ADDRESS: " + x.getAddress() + "\t" + "CITY: " + x.getCity() + "\t" + "STATE: "
-                    + x.getState() + "\n" + "CONTACTED LOCATION: " + x.getLocationOfContact() + "\n" + "DATE OF CONTACT: "
-                    + x.getDateOfContact());
+                listOfVisitedPlaces.add(newVisitedPlace);
+                System.out.print("Did " + newPatient.getName() + " visited anywhere in pass 14 days ? (y/n) ");
+                haveVisit = in.nextLine();
+
+            }
+            newPatient.setVisitedPlaceList(listOfVisitedPlaces);
+            newSearch.addPatient(newPatient);
             System.out.println();
+            newPatient.displayPatient();
+
+
+            System.out.print("Any new patient?");
+            patientFlag = in.nextLine();
         }
-
-        System.out.println("-------- Place's where " + newPatient.getName() + " visited in the past 14 days.");
-        for(Visit v : listOfVisits){
-            System.out.println( "Name: " + v.getVisitPlace() + ", Address: " + v.getVisitAddress() + ", City: "
-                    + v.getVisitCity() + ", State: " + v.getVisitState() + ", Visited Date: " + v.getVisitDate());
-        }
-
-
-
+        System.out.print("Which place you search for patient?");
+        newSearch.searchPatientsByPlace(in.nextLine());
     }
 }
